@@ -2,12 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import CSpinner from './CSpinner';
 
-interface PokemonDetailProps {}
+interface PokemonDetailProps { }
 
 interface Pokemon {
   id: number;
   name: string;
+  baseExperience: number
+  weight: number
+  height: number
 }
 
 const PokemonDetail: React.FC<PokemonDetailProps> = () => {
@@ -21,6 +25,9 @@ const PokemonDetail: React.FC<PokemonDetailProps> = () => {
         setPokemon({
           id: response.data.id,
           name: response.data.name,
+          baseExperience: response.data.base_experience,
+          weight: response.data.weight,
+          height: response.data.height,
         });
       } catch (error) {
         console.error(`Error fetching Pokémon details for ${id}:`, error);
@@ -30,21 +37,29 @@ const PokemonDetail: React.FC<PokemonDetailProps> = () => {
     fetchPokemon();
   }, [id]);
 
-  if (!pokemon) {
-    return <div className="text-center">Loading...</div>;
-  }
-
   return (
-    <div className="text-center bg-yellow-400">
-      <h2 className="text-2xl font-bold mb-4">Pokemon Detail</h2>
-      <img
-        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`}
-        alt={pokemon.name}
-        className="mx-auto mb-4"
-      />
-      <p className="text-lg font-bold">ID: {pokemon.id}</p>
-      <p className="text-lg font-bold">Name: {pokemon.name}</p>
-    </div>
+    <>
+      {
+        !pokemon ? (
+          <CSpinner caption="Data Is Coming ..." />
+        ) : (
+          <div className="text-center bg-yellow-400 p-4 m-3 rounded shadow-lg flex flex-col items-center justify-center gap-4 group duration-200 hover:-translate-y-1">
+            <div>
+              <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`} alt={pokemon.name} className='rounded-full bg-gray-200 w-32 h-32' />
+            </div>
+            <div className='grid grid-cols-2 gap-5'>
+              <div>
+                Name : {pokemon.name}
+              </div>
+              <div>BaseExperience : {pokemon.baseExperience}</div>
+              <div>Weight : {pokemon.weight}</div>
+              <div>Height : {pokemon.height}</div>
+            </div>
+          </div>
+        )
+      }
+
+    </>
   );
 };
 
