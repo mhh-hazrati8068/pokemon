@@ -6,6 +6,7 @@ import axios from "axios";
 
 const App: React.FC = () => {
   const [pokemons, setPokemons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -25,7 +26,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<PokemonList pokemons={pokemons} />} />
+        <Route path="/" element={<PokemonList pokemons={pokemons} isLoading={loading}/>} />
         <Route path="/pokemon/:id" element={<PokemonDetail />} />
       </Routes>
     </Router>
