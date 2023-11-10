@@ -26,14 +26,14 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, isLoading }) => {
                 <Link
                   key={pokemon.name}
                   to={`/pokemon/${pokemon.name}`}
-                  className="p-4 bg-yellow-200 hover:bg-yellow-300 rounded-md transition duration-300"
+                  className="p-4 bg-yellow-200 hover:bg-yellow-300 rounded-md transition duration-300 group"
                 >
                   <div className="text-center">
                     <img
                       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemons.indexOf(pokemon) + 1
                         }.png`}
                       alt={pokemon.name}
-                      className="mx-auto mb-2"
+                      className="mx-auto mb-2 group-hover:animate-pulse"
                     />
                     <p className="text-lg font-bold">{pokemon.name}</p>
                   </div>
